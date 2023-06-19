@@ -2,59 +2,62 @@
     import Counter from '../lib/Counter.svelte'
     import SvelteKitLogo from '../assets/favicon.png'
     import ViteIcon from '../assets/vite.svg'
+
+    import BingoDataPreview from '../lib/BingoDataPreview.svelte';
+    import type { PageData } from './$types'
+    import { each } from 'svelte/internal';
+    export let data: PageData
 </script>
 
 <main>
-    
-    <h1>SvelteKit Skeleton Project</h1>
-    
-    <h2>
-        Internal JIRIDIUM project setup for WebApps
-    </h2>
+    <h1>Hero Quest Amdin Panel</h1> 
+    <form method="POST">
+      <!-- Form inputs -->
+      <input id="title" class="tweet-input" name="title" inputmode="text" />
+      <input id="description" class="tweet-input" name="description" inputmode="text" />
+      <input id="expiresAt" class="tweet-input" name="expiresAt" inputmode="text" />
+      <!-- Submit button -->
+      <button class="tweet-button" type="submit">Paw</button>
+    </form>
 
-    <div class="card">
-      <Counter />
-    </div>
+    {#each data.feed as obj}
+      <BingoDataPreview title={obj.title} description={obj.description} />
+      <br>  
+
+    {/each}
+    <!-- {data.feed} -->
+
     
 
-    <h3>
-      Documentation:
-    </h3>
-    <p>
-      Check out <a href="https://svelte.dev/docs" target="_blank" rel="noreferrer">Svelte</a>, the official Svelte app framework documentation!
-    </p>
-    <p class="read-the-docs">
-      Check out <a href="https://kit.svelte.dev/docs/" target="_blank">SvelteKit Doc</a>, for the official SvelteKit documentation! 
-    </p>
-    
-    <h3>Powered by</h3>
-
-    <div>
-      <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-        <img src={SvelteKitLogo}  class="logo svelte" alt="Svelte Logo" />
-      </a>
-      <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-        <img src={ViteIcon} class="logo" alt="Vite Logo" />
-      </a>
-    </div> 
 </main>
 
 <style>
-    .logo {
-      height: 6em;
-      padding: 1.5em;
-      will-change: filter;
-      transition: filter 300ms;
-      
+    form {
+    padding-bottom: 10px;
+    border-bottom: 4px solid #222;
+  }
+  .no-feed {
+    margin-top: 10px;
+    text-align: center;
+  }
+  .tweet-input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: vertical;
     }
-    .logo:hover {
-      filter: drop-shadow(0 0 2em #646cffaa);
-    }
-    .logo.svelte:hover {
-      filter: drop-shadow(0 0 2em rgba(253, 253, 253, 0.667));
-    }
-    .read-the-docs {
-      color: #888;
+
+    .tweet-button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      font-size: 16px;
+      background-color: #1da1f2;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
 </style>
   

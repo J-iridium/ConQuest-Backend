@@ -1,37 +1,30 @@
 import { PrismaClient } from '@prisma/client'
+import userData from "../src/lib/data.json" assert { type: "json" }
 
-const db = new PrismaClient()
 
-type Post = {
-  title: string
-  body: string
-}
+const prisma = new PrismaClient()
 
-async function getPosts() : Promise<Post[]> {
-  const response = await fetch('https://dummyjson.com/posts')
-  const { posts } = await response.json()
-  return posts as Post[]
-}
-
-function slugify(text: string) : string {
-  return text
-    .replace(/\s/g, '-')
-    .replace(/[^a-zA-Z0-9-]/g, '')
-    .toLowerCase()
-}
 
 async function main() {
-  const posts = await getPosts()
-
-  for (const post of posts) {
-    await db.post.create({
-      data: {
-        title: post.title,
-        content: post.body,
-        slug: slugify(post.title)
-      }
-    })
+    console.log(`Start seeding ...`)
+  
+    for (const p of userData) {
+      const bingo = await prisma.bingo.create({
+        data: {
+            title: p.title,
+        }
+      })
+      console.log(`Created user with id: ${bingo.id}`)
+    }
+    console.log(`Seeding finished.`)
   }
-}
-
-main()
+  
+  main()
+    .then(async () => {
+      await prisma.$disconnect()
+    })
+    .catch(async (e) => {
+      console.error(e)
+      await prisma.$disconnect()
+      process.exit(1)
+    })
