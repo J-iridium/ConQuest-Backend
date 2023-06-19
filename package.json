@@ -24,7 +24,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@prisma/client": "^4.15.0"
+		"@prisma/client": "^4.15.0",
+		"@sveltejs/adapter-vercel": "^3.0.1"
 	},
 	"prisma": {
 		"seed": "npx vite-node prisma/seed.ts"
